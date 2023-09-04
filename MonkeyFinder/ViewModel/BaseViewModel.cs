@@ -4,7 +4,8 @@ public partial class BaseViewModel : ObservableObject
 {
     public BaseViewModel()
     {
-        
+        //this.i
+        //SetProperty(ref isBusy, true);
     }
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsNotBusy))]

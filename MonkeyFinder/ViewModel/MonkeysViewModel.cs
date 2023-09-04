@@ -7,20 +7,20 @@ public partial class MonkeysViewModel : BaseViewModel
     //Basically, we are gonna call a service - we need to give  collection-view some sort of DataType to do DataBinding into..
     
     MonkeyService monkeyService;
-    public ObservableCollection<Monkey> Monkeys { get; } = new();
+    // Basically, this is an Obserable List of Monkey
+    public ObservableCollection<Monkey> Monkeys { get; } = new(); 
     
-    //public Command GetMonkeysCommand { get; }
-    public MonkeysViewModel(MonkeyService  monkeyService)
+    //we inject monkeyService into viewModel here... 
+    public MonkeysViewModel(MonkeyService  monkeyService_from_DI)
     {
         Title = "Monkey Finder";
-        this.monkeyService = monkeyService;
-        //GetMonkeysCommand = new Command(async () => await GetMonkeyAsync());
+        this.monkeyService = monkeyService_from_DI;        
     }
 
-    [RelayCommand]
+    [RelayCommand] // this turns  GetMonkeyAsync() into a Command
     async Task GetMonkeyAsync()
     {
-        if (IsBusy)
+        if (IsBusy) // if someone jams on button so many times... AS
             return;
         try
         {
@@ -33,6 +33,7 @@ public partial class MonkeysViewModel : BaseViewModel
             }
             foreach(var monkey in monkeys)
             {
+                //Monkeys.Add(monkey);
                 Monkeys.Add(monkey);
             }
         }
@@ -45,7 +46,7 @@ public partial class MonkeysViewModel : BaseViewModel
         }
         finally
         {
-            IsBusy = false
+            IsBusy = false;
         }
     }
 }
